@@ -331,7 +331,11 @@ def generate_local_msas_for_chains(
         # Skip if it's not protein (e.g. if it's DNA/RNA or a ligand)
         if entity_type != "protein":
             continue
-
+        # Skip if the sequence is empty
+        if not seq.strip():
+            print(f"[INFO] Chain {chain_info['sequence']} is empty. Skipping MSA.")
+            continue
+        
         from chai_lab.data.parsing.msas.aligned_pqt import hash_sequence
         seq_hash = hash_sequence(seq.upper())
 
